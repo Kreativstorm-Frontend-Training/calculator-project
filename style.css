@@ -1,0 +1,55 @@
+*{ 
+padding: 0;
+margin: 0;
+}
+
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60rem;
+}
+
+.calc__buttons{
+    display: grid;
+    grid-template-columns: repeat(4,100px);
+    grid-template-rows: minmax(100px, auto) repeat(4, 80px);
+    font-weight: bold;
+    font-size: 10rem;
+}
+
+button{
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.calc__buttons #Divide,#Multiply,#Minus,
+#Plus,#Equals{
+    background-color: orange;
+}
+
+.calc__buttons #Clear, #PlusMinus, #Percent{
+    background-color: lightgray;
+}
+
+/*Not sure how to prevent the display from expanding when given many numbers*/
+.calc__display{
+    padding: 3rem;
+    width: calc(100% - 6rem); /* Subtract the padding (3rem on each side) from the total width */
+    height: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: rgb(57, 76, 92);
+}
+
+.calc__display{
+    color: white;
+    font-size: 3rem;
+    
+}
+
+.Number.Zero {
+ grid-column: span 2;
+}
