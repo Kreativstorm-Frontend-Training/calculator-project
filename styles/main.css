@@ -47,12 +47,16 @@ input {
 
 .button__operator {
   background-color: rgb(236, 154, 61);
-  color: white;
+  flex: 1;
+}
+
+.button__operator-active {
+  background-color: rgb(247, 192, 130);
+  flex: 1;
 }
 
 .button__no_operator {
   background-color: rgb(197, 196, 203);
-  color: white;
 }
 
 .button__number__bigbox {

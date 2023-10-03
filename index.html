@@ -1,48 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/main.css">
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="stylesheet" href="./styles/main.css" >
     <title>Calculator</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main">
-        <div class="container">
-            <div>
-                <input type="text" value="0">
-            </div>
-            <div>
-                <button class="button button__no_operator" onclick="handleButton('AC')">AC</button>
-                <button class="button button__no_operator" onclick="handleButton('+/-')">+/-</button>
-                <button class="button button__no_operator" onclick="handleButton('%')">%</button>
-                <button class="button button__operator" onclick="handleButton('/')">/</button>
-            </div>
-            <div>
-                <button class="button button__number" onclick="handleButton(1)">1</button>
-                <button class="button button__number" onclick="handleButton(2)">2</button>
-                <button class="button button__number" onclick="handleButton(3)">3</button>
-                <button class="button button__operator" onclick="handleButton('*')">*</button>
-            </div>
-            <div>
-                <button class="button button__number" onclick="handleButton(4)">4</button>
-                <button class="button button__number" onclick="handleButton(5)">5</button>
-                <button class="button button__number" onclick="handleButton(6)">6</button>
-                <button class="button button__operator" onclick="handleButton('-')">-</button>
-            </div>
-            <div>
-                <button class="button button__number" onclick="handleButton(7)">7</button>
-                <button class="button button__number" onclick="handleButton(8)">8</button>
-                <button class="button button__number" onclick="handleButton(9)">9</button>
-                <button class="button button__operator" onclick="handleButton('+')">+</button>
-            </div>
-            <div>
-                <button class="button button__number button__number__bigbox" onclick="handleButton(0)">0</button>
-                <button class="button button__number" onclick="handleButton('.')">.</button>
-                <button class="button button__operator" onclick="handleButton('=')">=</button>
-            </div>
+      <div class="container">
+        <div>
+          <input type="text" value="0" >
         </div>
+        <div>
+          <button
+            id="AC"
+            class="button button__no_operator"
+            onclick="handleButton('AC')"
+          >
+            AC
+          </button>
+          <button
+            class="button button__no_operator"
+            onclick="handleButton('+/-')"
+          >
+            +/-
+          </button>
+          <button
+            class="button button__no_operator"
+            onclick="handleButton('%')"
+          >
+            %
+          </button>
+          <button
+            id="/"
+            class="button button__operator"
+            onclick="handleButton('/')"
+          >
+            /
+          </button>
+        </div>
+        <div>
+          <button class="button button__number" onclick="handleButton(1)">
+            1
+          </button>
+          <button class="button button__number" onclick="handleButton(2)">
+            2
+          </button>
+          <button class="button button__number" onclick="handleButton(3)">
+            3
+          </button>
+          <button
+            id="*"
+            class="button button__operator"
+            onclick="handleButton('*')"
+          >
+            *
+          </button>
+        </div>
+        <div>
+          <button class="button button__number" onclick="handleButton(4)">
+            4
+          </button>
+          <button class="button button__number" onclick="handleButton(5)">
+            5
+          </button>
+          <button class="button button__number" onclick="handleButton(6)">
+            6
+          </button>
+          <button
+            id="-"
+            class="button button__operator"
+            onclick="handleButton('-')"
+          >
+            -
+          </button>
+        </div>
+        <div>
+          <button class="button button__number" onclick="handleButton(7)">
+            7
+          </button>
+          <button class="button button__number" onclick="handleButton(8)">
+            8
+          </button>
+          <button class="button button__number" onclick="handleButton(9)">
+            9
+          </button>
+          <button
+            id="+"
+            class="button button__operator"
+            onclick="handleButton('+')"
+          >
+            +
+          </button>
+        </div>
+        <div>
+          <button
+            class="button button__number button__number__bigbox"
+            onclick="handleButton(0)"
+          >
+            0
+          </button>
+          <button class="button button__number" onclick="handleButton('.')">
+            .
+          </button>
+          <button class="button button__operator" onclick="handleButton('=')">
+            =
+          </button>
+        </div>
+      </div>
     </div>
     <script src="./scripts/main.js"></script>
-</body>
+  </body>
 </html>
