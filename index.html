@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/main.css">
-    <title>Calculator</title>
-  </head>
-  <body>
-    <main>
-        <div class="container">
-            <div id="screen"></div>
-            <div class="button-wrapper">
-                <button class="button button--utility">AC</button>
-                <button class="button button--utility">+/-</button>
-                <button class="button button--utility">%</button>
-                <button class="button button--operator">&#247;</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./styles/main.css">
+        <title>Calculator</title>
+    </head>
+    <body>
+        <main>
+            <div class="container">
+                <div id="screen">
+                    <div id="oldValueDisplay"></div>
+                    <div id="operatorDisplay"></div>
+                    <div id="mainValueDisplay"></div>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button button--utility">AC</button>
+                    <button class="button button--utility">+/-</button>
+                    <button class="button button--utility">%</button>
+                    <button class="button button--operator">&#247;</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button button--number">7</button>
+                    <button class="button button--number">8</button>
+                    <button class="button button--number">9</button>
+                    <button class="button button--operator">x</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button button--number">4</button>
+                    <button class="button button--number">5</button>
+                    <button class="button button--number">6</button>
+                    <button class="button button--operator">&ndash;</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button button--number">1</button>
+                    <button class="button button--number">2</button>
+                    <button class="button button--number">3</button>
+                    <button class="button button--operator">+</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button button--number button--zero">0</button>
+                    <button class="button button--dot">.</button>
+                    <button class="button button--operator">=</button>
+                </div>
             </div>
-            <div class="button-wrapper">
-                <button class="button">7</button>
-                <button class="button">8</button>
-                <button class="button">9</button>
-                <button class="button button--operator">x</button>
-            </div>
-            <div class="button-wrapper">
-                <button class="button">4</button>
-                <button class="button">5</button>
-                <button class="button">6</button>
-                <button class="button button--operator">&ndash;</button>
-            </div>
-            <div class="button-wrapper">
-                <button class="button">1</button>
-                <button class="button">2</button>
-                <button class="button">3</button>
-                <button class="button button--operator">+</button>
-            </div>
-            <div class="button-wrapper">
-                <button class="button button--zero">0</button>
-                <button class="button">.</button>
-                <button class="button button--operator">=</button>
-            </div>
-        </div>
-    </main>
-    <script src="./scripts/main.js"></script>
-  </body>
+        </main>
+        <script src="./scripts/main.js"></script>
+    </body>
 </html>

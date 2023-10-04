@@ -1,135 +1,243 @@
-let currentValue = undefined;
-let operator = undefined;
-let arr = [];
-let isFloat = false;
+document.addEventListener('DOMContentLoaded', function() {
+    // SCREEN TARGETS
+    const oldValueDisplay = document.getElementById('oldValueDisplay');
+    const operatorDisplay = document.getElementById('operatorDisplay');
+    const mainValueDisplay = document.getElementById('mainValueDisplay');
+    // BUTTON TARGETS
+    const operatorButtons = document.querySelectorAll('button.button--operator');
+    const numberButtons = document.querySelectorAll('button.button--number');
+    const dotButton = document.querySelector('button.button--dot');
+    const utilityButtons = document.querySelectorAll('button.button--utility');
 
-function handleButton(value) {
-  if (typeof value === "number") {
-    handleDigit(value);
-  } else if (value === "AC") {
-    handleClear();
-  } else if (value == ".") {
-    handleDot();
-  } else if (value === "=") {
-    operate();
-  } else if (isDoubleOperator(value)) {
-    handleDoubleOperator(value);
-  } else {
-    handleSingleOperator(value);
-  }
-}
+    let currentValue = "";
+    const MAX_DISPLAY_LENGTH = 12;
 
-function operate() {
-  if (arr.length === 0) return;
-  const value = parseFloat(arr.join(""));
-  if (!currentValue) currentValue = value;
-  else
-    switch (operator) {
-      case "*":
-        currentValue = currentValue * value;
-        break;
-      case "+":
-        currentValue = currentValue + value;
-        break;
-      case "-":
-        currentValue = currentValue - value;
-        break;
-      case "/":
-        currentValue = currentValue / value;
-        break;
+    // EVENT LISTENERS
+    operatorButtons.forEach((element)=>{
+        element.addEventListener('click', handleOperator);
+    })
+    numberButtons.forEach((element)=>{
+        element.addEventListener('click', handleNumber);
+    })
+    utilityButtons.forEach((element)=>{
+        element.addEventListener('click', handleUtility);
+    })
+    dotButton.addEventListener('click', handleDot);
+    document.addEventListener('keydown', handleKeyboard);
+
+    function handleKeyboard(event) {
+        const keyPressed = event.key;
+
+        switch (keyPressed) {
+            case "0":
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+                handleNumber({target: { textContent:keyPressed }})
+                break;
+            case '=':
+            case 'Enter':
+                handleOperator({ target: { textContent: '=' } });
+                break;
+            case '+':
+                handleOperator({ target: { textContent: keyPressed } });
+                break;
+            case '-':
+                handleOperator({ target: { textContent: "–" } });
+                break;
+            case '*':
+                handleOperator({ target: { textContent: "x" } });
+                break;
+            case '/':
+                handleOperator({ target: { textContent: "÷" } });
+                break;
+            case '.':
+                handleDot();
+                break;
+            case 'Escape':
+            case 'Backspace':
+                handleUtility({target: {textContent: 'AC'}});
+                break;
+            case '%':
+                handleUtility({target: {textContent: '%'}});
+                break;
+        
+            default:
+                break;
+        }
     }
 
-  arr = [];
-  isFloat = false;
-  turnOffOperator();
-  display(currentValue);
-}
-
-function handleDigit(digit) {
-  arr.push(digit);
-  const num = arr.join("");
-  display(num);
-}
-
-function handleClear() {
-  arr = [];
-  currentValue = undefined;
-  isFloat = false;
-  turnOffOperator();
-  display(0);
-}
-
-function handleCalculate() {}
-
-function handleDot() {
-  if (!isFloat) {
-    isFloat = true;
-    if (arr.length === 0) {
-      currentValue = undefined;
-      arr.push("0");
+    function handleOperator(event) {
+        if (mainValueDisplay.textContent.endsWith(".")) return;
+    
+        const operatorClicked = event.target.textContent;
+        if (operatorClicked === "=") {
+            handleCalculation();
+            oldValueDisplay.textContent = ""; 
+            operatorDisplay.textContent = "";
+            return;
+        } else {
+            const shouldCalculateFirst = Boolean(oldValueDisplay.textContent) 
+                    && Boolean(operatorDisplay.textContent) && Boolean(mainValueDisplay.textContent);
+    
+            if (shouldCalculateFirst) {
+                handleCalculation();
+                // move to top
+                oldValueDisplay.textContent = currentValue; //new current value from calculation
+                operatorDisplay.textContent = operatorClicked;
+                mainValueDisplay.textContent = "";
+                currentValue = "";
+            } else if (oldValueDisplay.textContent && operatorDisplay.textContent) {
+                //all we want here is to change the operator
+                operatorDisplay.textContent = operatorClicked;
+            } else if (currentValue.length === 0) {
+                return;
+            } else {
+                oldValueDisplay.textContent = currentValue;
+                operatorDisplay.textContent = operatorClicked;
+                mainValueDisplay.textContent = "";
+                currentValue = "";
+            }
+        }
     }
-    arr.push(".");
-    const num = arr.join("");
-    display(num);
-  }
-}
+    
+    function handleNumber(event){
+        if(currentValue.length >= MAX_DISPLAY_LENGTH) return;
 
-function handleDoubleOperator(value) {
-  if (currentValue === undefined) {
-    const num = arr.join("");
-    if (num === "") currentValue = 0;
-    else currentValue = parseFloat(num);
-    display(currentValue);
-    arr = [];
-    isFloat = false;
-  } else {
-    operate();
-  }
+        const numberClicked = event.target.textContent;
 
-  turnOffOperator();
-  turnOnOperator(value);
-}
+        if(currentValue.length === 0 || currentValue === "0"){
+            currentValue = numberClicked;
+        } else {
+            currentValue = `${currentValue}${numberClicked}`;
+        }
+        
+        mainValueDisplay.textContent = currentValue;
+    }
 
-function handleSingleOperator(op) {
-  turnOffOperator();
-  const value =
-    arr.length === 0
-      ? currentValue === undefined
-        ? 0
-        : currentValue
-      : parseFloat(arr.join(""));
+    function handleUtility(event) {
+        const utilityValue = event.target.textContent;
 
-  let newValue;
-  if (op === "%") {
-    newValue = value / 100;
-  } else if (op === "+/-") {
-    newValue = -value;
-  }
-  arr = newValue.toString().split("");
-  isFloat = arr.includes(".");
-  display(newValue);
-  currentValue = undefined;
-}
+        switch (utilityValue) {
+            case "AC":
+                handleReset();
+                break;
+            case "+/-":
+                handleTogglePositivity();
+                break;
+            case "%":
+                handleTogglePercentage();
+                break;
+        
+            default:
+                break;
+        }
+    }
 
-function display(content) {
-  document.getElementsByTagName("input")[0].defaultValue = content;
-}
+    function handleReset(){
+        oldValueDisplay.textContent = "";
+        mainValueDisplay.textContent = "";
+        operatorDisplay.textContent = ""
+        currentValue = "";
+    }
 
-function turnOnOperator(value) {
-  if (operator === undefined) {
-    operator = value;
-    const e = document.getElementById(value);
-    if (e) e.className = "button__operator-active";
-  }
-}
+    function handleTogglePositivity() {
+        if(currentValue.length >= MAX_DISPLAY_LENGTH || currentValue === "0") return;
 
-function turnOffOperator() {
-  if (operator !== undefined) {
-    document.getElementById(operator).className = "button__operator";
-    operator = undefined;
-  }
-}
+        if(mainValueDisplay.textContent){
+            if(currentValue.includes('-')){
+                currentValue = currentValue.split('-')[1];
+            } else {
+                currentValue = `-${currentValue}`;
+            }
 
-function isDoubleOperator(op) {
-  return ["+", "-", "*", "/"].includes(op);
-}
+            mainValueDisplay.textContent = currentValue;
+        }
+    }
+
+    function handleTogglePercentage() {
+        if(currentValue.length >= MAX_DISPLAY_LENGTH || currentValue === "0") return;
+
+        if(mainValueDisplay.textContent){
+            currentValue = (sanitizeNumber(currentValue) / 100).toString();
+            mainValueDisplay.textContent = currentValue;
+        }
+    }
+
+    function handleDot() {
+        if(currentValue.length >= MAX_DISPLAY_LENGTH || currentValue.includes('.')) return;
+
+        if(currentValue.length === 0){
+            currentValue = "0.";
+        } else {
+            currentValue = `${currentValue}.`;
+        }
+
+        mainValueDisplay.textContent = currentValue;
+    }
+
+    function handleCalculation(){
+        if(oldValueDisplay.textContent && mainValueDisplay.textContent && operatorDisplay.textContent){
+            if(mainValueDisplay.textContent.endsWith('.')) return;
+
+            const leftHandSide = sanitizeNumber(oldValueDisplay.textContent);
+            const rightHandSide = sanitizeNumber(mainValueDisplay.textContent);
+
+            switch (operatorDisplay.textContent) {
+                case "÷":
+                    currentValue = rightHandSide === 0
+                    ? "0"
+                    : sanitizeNumber(leftHandSide / rightHandSide).toString();
+                    break;
+                case "x":
+                    currentValue = sanitizeNumber(leftHandSide * rightHandSide).toString();
+                    break;
+                case "–":
+                    currentValue = sanitizeNumber(leftHandSide - rightHandSide).toString();
+                    break;
+                    
+                default:
+                    currentValue = sanitizeNumber(leftHandSide + rightHandSide).toString();
+                    break;
+            }
+
+
+            mainValueDisplay.textContent = currentValue;
+        }
+    }
+
+    function sanitizeNumber(numberToSanitize) {
+        if(typeof numberToSanitize === 'number'){
+            // handle too large or too small numbers
+            if(numberToSanitize < 1e-3 || numberToSanitize >= 1e12){
+                numberToSanitize = numberToSanitize.toExponential(2);
+            }else{
+                numberToSanitize = numberToSanitize.toString();
+            }
+        }
+
+        const isFloat = numberToSanitize.includes('.');
+        if(isFloat){
+            if(numberToSanitize.includes('-')){
+                // is out of bounds number
+                return numberToSanitize;
+            }else{
+                //is normal float
+                const decimalPlaceLength = numberToSanitize.split('.')[1].length;
+                if(decimalPlaceLength > 1){
+                    return Number(parseFloat(numberToSanitize).toFixed(2));
+                }else{
+                    return parseFloat(numberToSanitize);
+                }
+            }
+        }else{
+            return parseInt(numberToSanitize);
+        }
+    }
+})

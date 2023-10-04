@@ -10,11 +10,11 @@
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box; /* Opera/IE 8+ */
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
 }
 
 main {
@@ -36,14 +36,22 @@ main {
 }
 
 #screen {
-    height: 100px;
+    height: 130px;
     background-color: var(--black);
     color: var(--white);
     display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-end;
-    font-size: 45px;
+    flex-direction: column;
+    row-gap: 2px;
     padding: 0.5rem;
+}
+#screen > div {
+    flex: 1;
+    text-align: right;
+    font-size: 25px;
+}
+#screen > #mainValueDisplay {
+    flex: 2;
+    font-size: 45px;
 }
 
 .button-wrapper {
