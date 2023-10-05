@@ -192,7 +192,10 @@ document.addEventListener('DOMContentLoaded', function() {
             switch (operatorDisplay.textContent) {
                 case "÷":
                     currentValue = rightHandSide === 0
-                    ? "0"
+                    ? (()=> {
+                        alert('You know you can\'t do that silly');
+                        return "0"
+                    })()
                     : sanitizeNumber(leftHandSide / rightHandSide).toString();
                     break;
                 case "x":
@@ -214,10 +217,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sanitizeNumber(numberToSanitize) {
         if(typeof numberToSanitize === 'number'){
-            console.log({numberToSanitize});
             // handle too large or too small numbers
             if(numberToSanitize < 1e-3 || numberToSanitize >= 1e11){
                 numberToSanitize = numberToSanitize.toExponential(2);
+            } else {
+                numberToSanitize = numberToSanitize.toString();
             }
         }
 
@@ -226,16 +230,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if(numberToSanitize.includes('-') || numberToSanitize.includes('+')){
                 // is out of bounds number
                 return numberToSanitize;
-            }else{
+            } else {
                 //is normal float
                 const decimalPlaceLength = numberToSanitize.split('.')[1].length;
                 if(decimalPlaceLength > 1){
                     return Number(parseFloat(numberToSanitize).toFixed(2));
-                }else{
+                } else {
                     return parseFloat(numberToSanitize);
                 }
             }
-        }else{
+        } else {
             return parseInt(numberToSanitize);
         }
     }
