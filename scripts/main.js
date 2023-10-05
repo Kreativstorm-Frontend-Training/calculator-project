@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const operatorButtons = document.querySelectorAll('button.button--operator');
     const numberButtons = document.querySelectorAll('button.button--number');
     const dotButton = document.querySelector('button.button--dot');
+    const backspaceButton = document.querySelector('button.button--delete');
     const utilityButtons = document.querySelectorAll('button.button--utility');
 
     let currentValue = "";
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         element.addEventListener('click', handleUtility);
     })
     dotButton.addEventListener('click', handleDot);
+    backspaceButton.addEventListener('click', handleBackspace);
     document.addEventListener('keydown', handleKeyboard);
 
     function handleKeyboard(event) {
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             case "7":
             case "8":
             case "9":
-                handleNumber({target: { textContent:keyPressed }})
+                handleNumber({ target: { textContent:keyPressed }})
                 break;
             case '=':
             case 'Enter':
@@ -61,15 +63,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 handleDot();
                 break;
             case 'Escape':
+                handleUtility({ target: { textContent: 'AC' }});
+                break;
             case 'Backspace':
-                handleUtility({target: {textContent: 'AC'}});
+                handleBackspace();
                 break;
             case '%':
-                handleUtility({target: {textContent: '%'}});
+                handleUtility({ target: { textContent: '%' }});
                 break;
         
             default:
                 break;
+        }
+    }
+
+    function handleBackspace() {
+        if(mainValueDisplay.textContent.length){
+            currentValue = mainValueDisplay.textContent.slice(0, -1);
+            mainValueDisplay.textContent = currentValue;
         }
     }
 
