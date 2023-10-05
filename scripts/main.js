@@ -214,17 +214,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function sanitizeNumber(numberToSanitize) {
         if(typeof numberToSanitize === 'number'){
+            console.log({numberToSanitize});
             // handle too large or too small numbers
-            if(numberToSanitize < 1e-3 || numberToSanitize >= 1e12){
+            if(numberToSanitize < 1e-3 || numberToSanitize >= 1e11){
                 numberToSanitize = numberToSanitize.toExponential(2);
-            }else{
-                numberToSanitize = numberToSanitize.toString();
             }
         }
 
         const isFloat = numberToSanitize.includes('.');
         if(isFloat){
-            if(numberToSanitize.includes('-')){
+            if(numberToSanitize.includes('-') || numberToSanitize.includes('+')){
                 // is out of bounds number
                 return numberToSanitize;
             }else{
