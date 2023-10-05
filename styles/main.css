@@ -1,5 +1,106 @@
+:root {
+    --light-grey: hsl(240, 13%, 89%);
+    --light-grey-hover: hsl(240, 13%, 79%);
+    --dark-grey: hsl(255, 6%, 75%);
+    --dark-grey-hover: hsl(255, 6%, 65%);
+    --orange: hsl(34, 97%, 58%);
+    --orange-hover: hsl(34, 97%, 48%);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(300, 6%, 10%);
+}
+
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.container {
+    box-shadow: -2px 2px 29px 5px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -2px 2px 29px 5px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: -2px 2px 29px 5px rgba(0, 0, 0, 0.75);
+}
+
+.button-wrapper, #screen {
+    width: 300px;
+}
+
+#screen {
+    height: 130px;
+    background-color: var(--black);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 0.5rem;
+}
+#screen > div {
+    flex: 1;
+    text-align: right;
+    font-size: 25px;
+}
+#screen > #mainValueDisplay {
+    flex: 2;
+    font-size: 45px;
+}
+
+.button-wrapper {
+    height: 80px;
+    display: flex;
+}
+
+.button-wrapper button {
+    flex-basis: 25%;
+    border: none;
+    font-size: 20px;
+    border-right: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+    background-color: var(--light-grey);
+}
+
+.button-wrapper > button:last-of-type {
+    border-right: none;
+}
+
+.button-wrapper:last-of-type > button {
+    border-bottom: none;
+}
+
+.button-wrapper button:hover {
+    background-color: var(--light-grey-hover);
+}
+
+.button-wrapper button:active {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+}
+
+.button-wrapper > .button--zero {
+    flex-basis: 50%;
+}
+
+.button-wrapper >.button--operator {
+    background-color: var(--orange);
+    color: var(--white);
+}
+
+.button-wrapper >.button--operator:hover {
+    background-color: var(--orange-hover);
+}
+
+.button-wrapper > .button--utility {
+    background-color: var(--dark-grey);
+}
+
+.button-wrapper > .button--utility:hover {
+    background-color: var(--dark-grey-hover);
 }
