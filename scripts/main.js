@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function sanitizeNumber(numberToSanitize) {
         if(typeof numberToSanitize === 'number'){
             // handle too large or too small numbers
-            if(numberToSanitize < 1e-3 || numberToSanitize >= 1e11){
+            if(numberToSanitize.toString().length >= MAX_DISPLAY_LENGTH){
                 numberToSanitize = numberToSanitize.toExponential(2);
             } else {
                 numberToSanitize = numberToSanitize.toString();
