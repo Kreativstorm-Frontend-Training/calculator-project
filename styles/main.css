@@ -84,10 +84,6 @@ main {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
 }
 
-.button-wrapper > .button--zero {
-    flex-basis: 50%;
-}
-
 .button-wrapper >.button--operator {
     background-color: var(--orange);
     color: var(--white);
