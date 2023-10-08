@@ -220,7 +220,7 @@ function handleCalculation() {
 }
 
 function sanitizeNumber(numberToSanitize) {
-    if(typeof numberToCheck !== "number" && typeof numberToCheck !== "string")  return 0;
+    if(typeof numberToSanitize !== "number" && typeof numberToSanitize !== "string")  return 0;
 
     if (typeof numberToSanitize === "number") {
         // handle too large or too small numbers
