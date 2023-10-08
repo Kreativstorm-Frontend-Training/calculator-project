@@ -80,8 +80,15 @@ function handleKeyboard(keyPressed) {
 
 function handleBackspace() {
     if (mainValueDisplay.textContent.length) {
-        if (isOutOfBoundsNumber(mainValueDisplay.textContent)) currentValue = "0";
-        else currentValue = mainValueDisplay.textContent.slice(0, -1);
+        if (isOutOfBoundsNumber(mainValueDisplay.textContent)) {
+            currentValue = "0"
+        } else if(mainValueDisplay.textContent.length === 1){
+            //last item is being deleted - should reset
+            handleReset();
+        } else {
+            currentValue = mainValueDisplay.textContent.slice(0, -1)
+        }
+
         mainValueDisplay.textContent = currentValue;
     }
 }
