@@ -1,3 +1,5 @@
+// ERROR TARGET
+const errorDisplay = document.getElementById("error-display");
 // SCREEN TARGETS
 const topValueDisplay = document.getElementById("oldValueDisplay");
 const operatorDisplay = document.getElementById("operatorDisplay");
@@ -198,7 +200,7 @@ function handleCalculation() {
         case "÷":
             currentValue = rightHandSide === 0
                 ? (() => {
-                    alert("You know you can't do that silly");
+                    showError();
                     return "0";
                 })()
                 : sanitizeNumber(leftHandSide / rightHandSide).toString();
@@ -268,4 +270,12 @@ function canCalculate() {
     return Boolean(topValueDisplay.textContent) &&
     Boolean(operatorDisplay.textContent) &&
     Boolean(mainValueDisplay.textContent);
+}
+
+function showError() {
+    errorDisplay.classList.add('show');
+
+    setTimeout(() => {
+        errorDisplay.classList.remove('show');
+    }, 3000);
 }
