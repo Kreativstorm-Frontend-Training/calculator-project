@@ -87,15 +87,16 @@ function handleBackspace() {
 function handleOperator(operatorClicked) {
     if (mainValueDisplay.textContent.endsWith(".")) return;
 
-    if (operatorClicked === "=") {
-        handleCalculation();
-        topValueDisplay.textContent = "";
-        operatorDisplay.textContent = "";
-        return;
-    } else {
-        const shouldCalculateFirst = canCalculate();
+    const canPerformCalculation = canCalculate();
 
-        if (shouldCalculateFirst) {
+    if (operatorClicked === "=") {
+        if(canPerformCalculation){
+            handleCalculation();
+            topValueDisplay.textContent = "";
+            operatorDisplay.textContent = "";
+        }
+    } else {
+        if (canPerformCalculation) {
             handleCalculation();
             // move to top
             topValueDisplay.textContent = currentValue; //new current value from calculation
@@ -106,7 +107,7 @@ function handleOperator(operatorClicked) {
             //all we want here is to change the operator
             operatorDisplay.textContent = operatorClicked;
         } else if (currentValue.length === 0) {
-        return;
+            return;
         } else {
             topValueDisplay.textContent = currentValue;
             operatorDisplay.textContent = operatorClicked;
@@ -188,35 +189,33 @@ function handleDot() {
 }
 
 function handleCalculation() {
-    if (canCalculate()) {
-        if (mainValueDisplay.textContent.endsWith(".")) return;
+    if (mainValueDisplay.textContent.endsWith(".")) return;
 
-        const leftHandSide = sanitizeNumber(topValueDisplay.textContent);
-        const rightHandSide = sanitizeNumber(mainValueDisplay.textContent);
+    const leftHandSide = sanitizeNumber(topValueDisplay.textContent);
+    const rightHandSide = sanitizeNumber(mainValueDisplay.textContent);
 
-        switch (operatorDisplay.textContent) {
-            case "÷":
-                currentValue = rightHandSide === 0
-                    ? (() => {
-                        alert("You know you can't do that silly");
-                        return "0";
-                    })()
-                    : sanitizeNumber(leftHandSide / rightHandSide).toString();
-                break;
-            case "x":
-                currentValue = sanitizeNumber(leftHandSide * rightHandSide).toString();
-                break;
-            case "–":
-                currentValue = sanitizeNumber(leftHandSide - rightHandSide).toString();
-                break;
+    switch (operatorDisplay.textContent) {
+        case "÷":
+            currentValue = rightHandSide === 0
+                ? (() => {
+                    alert("You know you can't do that silly");
+                    return "0";
+                })()
+                : sanitizeNumber(leftHandSide / rightHandSide).toString();
+            break;
+        case "x":
+            currentValue = sanitizeNumber(leftHandSide * rightHandSide).toString();
+            break;
+        case "–":
+            currentValue = sanitizeNumber(leftHandSide - rightHandSide).toString();
+            break;
 
-            default:
-                currentValue = sanitizeNumber(leftHandSide + rightHandSide).toString();
-                break;
-        }
-
-        mainValueDisplay.textContent = currentValue;
+        default:
+            currentValue = sanitizeNumber(leftHandSide + rightHandSide).toString();
+            break;
     }
+
+    mainValueDisplay.textContent = currentValue;
 }
 
 function sanitizeNumber(numberToSanitize) {
