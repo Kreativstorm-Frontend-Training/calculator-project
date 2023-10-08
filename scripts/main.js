@@ -180,7 +180,7 @@ function handleTogglePercentage() {
     if (currentValue === "0") return;
 
     if (mainValueDisplay.textContent) {
-        currentValue = (sanitizeNumber(currentValue) / 100).toString();
+        currentValue = (sanitizeNumber(currentValue) / 100).toFixed(2);
         mainValueDisplay.textContent = currentValue;
     }
 }
